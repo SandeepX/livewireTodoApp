@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Todo;
 use Illuminate\Http\Request;
+use App\Mail\sendNotification;
+use Mail;
 
 class TodoController extends Controller
 {
@@ -15,6 +17,11 @@ class TodoController extends Controller
     public function index()
     {
         //
+    }
+
+    public function sendEmail(){
+        Mail::to('sandeep024@gmail.com')->send(new sendNotification());
+        return view('home');
     }
 
     /**

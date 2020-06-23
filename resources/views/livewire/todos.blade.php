@@ -1,4 +1,20 @@
 <div>
+
+	<div  >
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
+
+    <div >
+        @if (session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
     
     <div class="d-flex mb-4">
         <input type="text" name="addTodo" class="form-control form-control-lg " id="addTodo" placeholder="What needs to be done?" wire:model="title" wire:keydown.enter="addTodo" >
@@ -8,13 +24,7 @@
         @endif
     </div>
 	
-	<div>
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
-    </div>
+	
 
     <ul class="list-group">
         @foreach($todos as $todo)
@@ -27,7 +37,7 @@
                     onclick="updateTodoPrompt('{{$todo->title}}') || event.stopImmediatePropagation()"
                     wire:click="updateTodo({{$todo->id}}, todoUpdated)"
                     >
-					{{ $todo->title }}
+					<strong class="$todo->completed ? 'completed':''">{{ $todo->title }}</strong>
                 </a>
               </div>
               <div>
@@ -58,7 +68,12 @@
           todoUpdated = todo;
           return true;
         }
-    </script>
+	</script>
+
+		
+    
+    
+
     
 </div>
 

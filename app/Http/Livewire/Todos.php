@@ -31,11 +31,16 @@ class Todos extends Component
         $this->validate([
             'title' => 'required|max:100',
         ]);
-        Todo::create([
+        $success=Todo::create([
             'user_id' => auth()->id(),
             'title' => $this->title,
             'completed' => false,
         ]);
+        if($success){
+            session()->flash('message', 'task successfully Added.');
+        }else{
+            session()->flash('error', 'task not Added.');
+        }
 
         $this->title ='';
     }
@@ -56,8 +61,12 @@ class Todos extends Component
         
         $todo = Todo::find($id);
         $todo->title = $title;
-        $todo->save();
-
-        session()->flash('message', 'task successfully updated.');
+        $success=$todo->save();
+        if($success){
+            session()->flash('message', 'task successfully updated.');
+        }else{
+            session()->flash('error', 'task not updated.');
+        }
+        
     }
 }
